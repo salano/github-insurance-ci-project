@@ -1,0 +1,78 @@
+name: dbt CI/CD
+on:
+  push:
+    branches: ["main"]
+  pull_request:
+    branches: ["main"]
+
+jobs:
+  dbt_test:
+    name: Run dbt Tests
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v4
+        with:
+          python-version: "3.13"
+
+      - name: Install dbt
+        run: pip install dbt-core dbt-fabric sqlfluff
+
+      - name: Install dbt dependencies
+        run: dbt deps
+
+      - name: Run lint check on snapshots
+        run: sqlfluff lint snapshots --dialect tsql
+
+      - name: Run lint check on models
+        run: sqlfluff lint models --dialect tsql
+
+      - name: Execute dbt Tests
+        run: dbt test --profiles-dir ./
+        env:
+          DBT-FABRIC-SERVER: ${{ secrets.FABRIC-SERVER }}
+          DBT-FABRIC-TENANT_ID : ${{ secrets.FABRIC-TENANT_ID }}
+          DBT-FABRIC-CLIENT_ID: ${{ secrets.FABRIC-CLIENT_ID }}
+          DBT-FABRIC-CLIENT-SECRET: ${{ secrets.FABRIC-CLIENT-SECRET }}
+
+  dbt_build:
+    name: Build and Deploy dbt Models
+    runs-on: ubuntu-latest
+    needs: dbt_test # This job runs only if dbt_test passes.
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v4
+        with:
+          python-version: "3.13"
+
+      - name: Install dbt
+        run: pip- name: Install dbt
+        run: pip install dbt-core dbt-fabric sqlfluff
+
+      - name: Install dbt dependencies
+        run: dbt deps
+
+      - name: Run lint check on snapshots
+        run: sqlfluff lint snapshots --dialect tsql
+
+      - name: Run lint check on models
+        run: sqlfluff lint models --dialect tsql 
+
+      - name: Build dbt Models
+        run: dbt build --profiles-dir ./
+
+        env:
+          DBT_PROFILES_DIR: .
+          DBT-FABRIC-SERVER: ${{ secrets.FABRIC-SERVER }}
+          DBT-FABRIC-TENANT_ID : ${{ secrets.FABRIC-TENANT_ID }}
+          DBT-FABRIC-CLIENT_ID: ${{ secrets.FABRIC-CLIENT_ID }}
+          DBT-FABRIC-CLIENT-SECRET: ${{ secrets.FABRIC-CLIENT-SECRET }}
+
+      - name: Deploy dbt Models to Fabric
+        if: github.event_name == 'push'
+        run: dbt run --target prod
+        env:
+          DBT-FABRIC-SERVER: ${{ secrets.FABRIC_SERVER }}
+          DBT-FABRIC-TENANT_ID : ${{ secrets.FABRIC_TENANT_ID }}
+          DBT-FABRIC-CLIENT_ID: ${{ secrets.FABRIC_CLIENT_ID }}
+          DBT-FABRIC-CLIENT-SECRET: ${{ secrets.FABRIC_CLIENT_SECRET }}
