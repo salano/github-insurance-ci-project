@@ -1,8 +1,8 @@
 {% test no_future_dates(model, column_name) %}
     select 
-        {{ column_name}}
+        {{ column_name }}
     from 
         {{ model }}
     where 
-       {{ column_name}} > getdate()
+       {{ column_name }} > getdate()
 {% endtest %}

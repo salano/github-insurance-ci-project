@@ -25,10 +25,10 @@ indented_on_contents = false
 indented_ctes = false
 
 [sqlfluff:rules:aliasing.table]
-aliasing.table = explicit
+aliasing = explicit
 
 [sqlfluff:rules:aliasing.column]
-aliasing.column = explicit
+aliasing = explicit
 
 [sqlfluff:rules:aliasing.expression]
 allow_scalar = True
