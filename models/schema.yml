@@ -1,26 +1,31 @@
 models:
-  - name: gt_fs_customers
-    description: This is the cleaned customers data set for consumption by reports and analyst
+  - name: gt_ins_claims
+    description: This is the cleaned claims dataset for consumption by reports and analyst
     columns:
-      - name: sk_fs_customer
-        description: Surrogate key for customer's data
+      - name: claim_id
+        description: Identifier for claims
         tests:
           - not_null
           - unique
-      - name: dbt_id_sourcesystem
-        description: Source system name
-      - name: dbt_id_business_key
-        description: Business key of customer data
+      - name: policy_id
+        description: Policy Id of the claim foreign key of policies table
+      - name: claim_date
+        description: date claim was recorded
         tests:
           - not_null
-          - unique
-      - name: dbt_current_flag
-        description: Record active status 0 inactive, 1 active
+      - name: claim_amount
+        description: The dollar amount of the claim
         tests:
-          - not_null
-      - name: dbt_valid_from
-        description: Start active date of record
-      - name: dbt_valid_to
-        description: Date record expires
-      - name: dbt_updated_at
-        description: Date record was last updated
+          - less_than_zero
+      - name: status
+        description: Status of a claim - Approved, Pending, Rejected
+      - name: gender
+        description: Gender of Claimant - Male or Female
+      - name: deductible
+        description: Money paying out of pocket before insurance pays
+      - name: claim_reason
+        description: Reason for the claim - Theft, fire
+      - name: is_fraud
+        description: Whether claim is fraudulent or not
+      - name: Zip_Code
+        description: Geographic area claim was made
