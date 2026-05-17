@@ -20,7 +20,7 @@ tab_space_size = 2
 indent_unit = space
 indented_joins = false
 indented_using_on = true
-implicit_indents = true
+implicit_indents = allow
 indented_on_contents = false
 indented_ctes = false
 
