@@ -33,10 +33,10 @@ jobs:
       - name: Execute dbt Tests
         run: dbt test --profiles-dir ./
         env:
-          DBT-FABRIC-SERVER: ${{ secrets.FABRIC-SERVER }}
-          DBT-FABRIC-TENANT_ID: ${{ secrets.FABRIC-TENANT_ID }}
-          DBT-FABRIC-CLIENT_ID: ${{ secrets.FABRIC-CLIENT_ID }}
-          DBT-FABRIC-CLIENT-SECRET: ${{ secrets.FABRIC-CLIENT-SECRET }}
+          DBT_FABRIC_SERVER: ${{ secrets.FABRIC_SERVER }}
+          DBT_FABRIC_TENANT_ID: ${{ secrets.FABRIC_TENANT_ID }}
+          DBT_FABRIC_CLIENT_ID: ${{ secrets.FABRIC_CLIENT_ID }}
+          DBT_FABRIC_CLIENT_SECRET: ${{ secrets.FABRIC_CLIENT_SECRET }}
 
   dbt_build:
     name: Build and Deploy dbt Models
@@ -68,16 +68,16 @@ jobs:
 
         env:
           DBT_PROFILES_DIR: .
-          DBT-FABRIC-SERVER: ${{ secrets.FABRIC-SERVER }}
-          DBT-FABRIC-TENANT_ID: ${{ secrets.FABRIC-TENANT_ID }}
-          DBT-FABRIC-CLIENT_ID: ${{ secrets.FABRIC-CLIENT_ID }}
-          DBT-FABRIC-CLIENT-SECRET: ${{ secrets.FABRIC-CLIENT-SECRET }}
+          DBT_FABRIC_SERVER: ${{ secrets.FABRIC_SERVER }}
+          DBT_FABRIC_TENANT_ID: ${{ secrets.FABRIC_TENANT_ID }}
+          DBT_FABRIC_CLIENT_ID: ${{ secrets.FABRIC_CLIENT_ID }}
+          DBT_FABRIC_CLIENT_SECRET: ${{ secrets.FABRIC_CLIENT_SECRET }}
 
       - name: Deploy dbt Models to Fabric
         if: github.event_name == 'push'
         run: dbt run --target prod
         env:
-          DBT-FABRIC-SERVER: ${{ secrets.FABRIC_SERVER }}
-          DBT-FABRIC-TENANT_ID: ${{ secrets.FABRIC_TENANT_ID }}
-          DBT-FABRIC-CLIENT_ID: ${{ secrets.FABRIC_CLIENT_ID }}
-          DBT-FABRIC-CLIENT-SECRET: ${{ secrets.FABRIC_CLIENT_SECRET }}
+          DBT_FABRIC_SERVER: ${{ secrets.FABRIC_SERVER }}
+          DBT_FABRIC_TENANT_ID: ${{ secrets.FABRIC_TENANT_ID }}
+          DBT_FABRIC_CLIENT_ID: ${{ secrets.FABRIC_CLIENT_ID }}
+          DBT_FABRIC_CLIENT_SECRET: ${{ secrets.FABRIC_CLIENT_SECRET }}
