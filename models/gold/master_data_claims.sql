@@ -22,7 +22,7 @@ WITH base_query AS (
         c.[Zip_Code],
         p.[policy_id],
         p.[policy_type],
-        p.[status] as [policy_status],
+        p.[status] AS [policy_status],
         p.[start_date],
         p.[end_date],
         p.[coverage_amount],
@@ -35,12 +35,12 @@ WITH base_query AS (
         cu.[Contact_Number],
         cu.[CustomerName]
     FROM
-        {{ ref('gt_ins_claims') }} c
+        {{ ref('gt_ins_claims') }} AS c
     LEFT JOIN 
-        {{ ref('st_ins_policies') }} p
+        {{ ref('st_ins_policies') }} AS p
     on p.[policy_id] = c.[policy_id]
     LEFT JOIN 
-        {{ ref('st_ins_customers') }} cu
+        {{ ref('st_ins_customers') }} AS cu
     on cu.[cust_id] = p.[cust_id]
     WHERE 
         p.[dbt_valid_to] IS NULL
