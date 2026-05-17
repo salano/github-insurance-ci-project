@@ -31,7 +31,7 @@ jobs:
         run: dbt test --profiles-dir ./
         env:
           DBT-FABRIC-SERVER: ${{ secrets.FABRIC-SERVER }}
-          DBT-FABRIC-TENANT_ID : ${{ secrets.FABRIC-TENANT_ID }}
+          DBT-FABRIC-TENANT_ID: ${{ secrets.FABRIC-TENANT_ID }}
           DBT-FABRIC-CLIENT_ID: ${{ secrets.FABRIC-CLIENT_ID }}
           DBT-FABRIC-CLIENT-SECRET: ${{ secrets.FABRIC-CLIENT-SECRET }}
 
@@ -46,7 +46,6 @@ jobs:
           python-version: "3.13"
 
       - name: Install dbt
-        run: pip- name: Install dbt
         run: pip install dbt-core dbt-fabric sqlfluff
 
       - name: Install dbt dependencies
@@ -56,7 +55,7 @@ jobs:
         run: sqlfluff lint snapshots --dialect tsql
 
       - name: Run lint check on models
-        run: sqlfluff lint models --dialect tsql 
+        run: sqlfluff lint models --dialect tsql
 
       - name: Build dbt Models
         run: dbt build --profiles-dir ./
@@ -64,7 +63,7 @@ jobs:
         env:
           DBT_PROFILES_DIR: .
           DBT-FABRIC-SERVER: ${{ secrets.FABRIC-SERVER }}
-          DBT-FABRIC-TENANT_ID : ${{ secrets.FABRIC-TENANT_ID }}
+          DBT-FABRIC-TENANT_ID: ${{ secrets.FABRIC-TENANT_ID }}
           DBT-FABRIC-CLIENT_ID: ${{ secrets.FABRIC-CLIENT_ID }}
           DBT-FABRIC-CLIENT-SECRET: ${{ secrets.FABRIC-CLIENT-SECRET }}
 
@@ -73,6 +72,6 @@ jobs:
         run: dbt run --target prod
         env:
           DBT-FABRIC-SERVER: ${{ secrets.FABRIC_SERVER }}
-          DBT-FABRIC-TENANT_ID : ${{ secrets.FABRIC_TENANT_ID }}
+          DBT-FABRIC-TENANT_ID: ${{ secrets.FABRIC_TENANT_ID }}
           DBT-FABRIC-CLIENT_ID: ${{ secrets.FABRIC_CLIENT_ID }}
           DBT-FABRIC-CLIENT-SECRET: ${{ secrets.FABRIC_CLIENT_SECRET }}
