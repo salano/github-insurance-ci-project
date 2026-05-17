@@ -57,12 +57,6 @@ jobs:
       - name: Install dbt dependencies
         run: dbt deps
 
-      - name: Run lint check on snapshots
-        run: sqlfluff lint snapshots --dialect tsql
-
-      - name: Run lint check on models
-        run: sqlfluff lint models --dialect tsql
-
       - name: Build dbt Models
         run: dbt build --profiles-dir ./
 

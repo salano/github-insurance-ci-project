@@ -1,0 +1,66 @@
+name: dbt CI/CD
+on:
+  pull_request:
+    branches: ["main"]
+  push:
+    branches: ["main"]
+
+jobs:
+  # -------------------------------------------------------------
+  # 1. CI JOB: Runs ONLY on Pull Requests to validate code quality
+  # -------------------------------------------------------------
+  continuous_integration:
+    name: Validate Code Changes (CI)
+    if: github.event_name == 'pull_request'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v4
+        with:
+          python-version: "3.13"
+
+      - name: Install dependencies
+        run: |
+          pip install dbt-core dbt-fabric sqlfluff
+          sudo ACCEPT_EULA=Y apt-get install msodbcsql18 -y
+          dbt deps
+
+      - name: Lint SQL
+        run: |
+          sqlfluff lint snapshots --dialect tsql
+          sqlfluff lint models --dialect tsql
+
+      - name: Build & Test in CI Schema
+        run: dbt build --target test --profiles-dir ./
+        env:
+          DBT_FABRIC_SERVER: ${{ secrets.FABRIC_SERVER }}
+          DBT_FABRIC_TENANT_ID: ${{ secrets.FABRIC_TENANT_ID }}
+          DBT_FABRIC_CLIENT_ID: ${{ secrets.FABRIC_CLIENT_ID }}
+          DBT_FABRIC_CLIENT_SECRET: ${{ secrets.FABRIC_CLIENT_SECRET }}
+
+  # -------------------------------------------------------------
+  # 2. CD JOB: Runs ONLY on Push to Main to deploy to Production
+  # -------------------------------------------------------------
+  continuous_delivery:
+    name: Deploy to Production (CD)
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v4
+        with:
+          python-version: "3.13"
+
+      - name: Install dependencies
+        run: |
+          pip install dbt-core dbt-fabric
+          sudo ACCEPT_EULA=Y apt-get install msodbcsql18 -y
+          dbt deps
+
+      - name: Deploy and Test Production
+        run: dbt build --target prod --profiles-dir ./
+        env:
+          DBT_FABRIC_SERVER: ${{ secrets.FABRIC_SERVER }}
+          DBT_FABRIC_TENANT_ID: ${{ secrets.FABRIC_TENANT_ID }}
+          DBT_FABRIC_CLIENT_ID: ${{ secrets.FABRIC_CLIENT_ID }}
+          DBT_FABRIC_CLIENT_SECRET: ${{ secrets.FABRIC_CLIENT_SECRET }}
