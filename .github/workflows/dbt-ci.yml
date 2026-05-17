@@ -18,6 +18,9 @@ jobs:
       - name: Install dbt
         run: pip install dbt-core dbt-fabric sqlfluff
 
+       - name: Install Microsoft ODBC
+        run: sudo ACCEPT_EULA=Y apt-get install msodbcsql18 -y
+
       - name: Install dbt dependencies
         run: dbt deps
 
@@ -47,6 +50,9 @@ jobs:
 
       - name: Install dbt
         run: pip install dbt-core dbt-fabric sqlfluff
+
+       - name: Install Microsoft ODBC
+        run: sudo ACCEPT_EULA=Y apt-get install msodbcsql18 -y
 
       - name: Install dbt dependencies
         run: dbt deps
