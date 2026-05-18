@@ -1,5 +1,3 @@
 packages:
-  - git: "https://github.com"
-    revision: "1.3.3"
-  - git: "https://github.com"
-    revision: "0.17.1"
+  - package: dbt-labs/dbt_utils
+    version: 1.3.3
