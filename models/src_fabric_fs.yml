@@ -51,9 +51,8 @@ sources:
             tests:
               - not_null
               - relationships:
-                  arguments:
-                    to: ref('cust')
-                    field: cust_id
+                  to: ref('cust')
+                  field: cust_id
           - name: policy_type
             tests:
               - not_null
@@ -108,9 +107,8 @@ sources:
             tests:
               - not_null
               - relationships:
-                  arguments:
-                    to: ref('pol')
-                    field: policy_id
+                  to: ref('pol')
+                  field: policy_id
           - name: claim_date
             tests:
               - not_null
