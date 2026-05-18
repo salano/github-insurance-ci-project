@@ -27,9 +27,8 @@ sources:
               - not_null
               - string_not_empty
               - accepted_values:
-                  arguments:
-                    values: ["Male", "Female"]
-                    quote: true
+                  values: ["Male", "Female"]
+                  quote: true
           - name: CustomerName
             tests:
               - not_null
@@ -60,17 +59,15 @@ sources:
               - not_null
               - string_not_empty
               - accepted_values:
-                  arguments:
-                    values: ["Life", "Health", "Auto"]
-                    quote: true
+                  values: ["Life", "Health", "Auto"]
+                  quote: true
           - name: status
             tests:
               - not_null
               - string_not_empty
               - accepted_values:
-                  arguments:
-                    values: ["Active", "Inactive"]
-                    quote: true
+                  values: ["Active", "Inactive"]
+                  quote: true
           - name: start_date
             tests:
               #- not_null
@@ -96,9 +93,8 @@ sources:
               - not_null
               - string_not_empty
               - accepted_values:
-                  arguments:
-                    values: ["Online", "Broker", "Agent"]
-                    quote: true
+                  values: ["Online", "Broker", "Agent"]
+                  quote: true
 
       - name: claims
         description: The claims table in the landing lakehouse
@@ -128,9 +124,8 @@ sources:
               - not_null
               - string_not_empty
               - accepted_values:
-                  arguments:
-                    values: ["Male", "Female"]
-                    quote: true
+                  values: ["Male", "Female"]
+                  quote: true
           - name: deductible
             tests:
               - not_null
@@ -143,9 +138,8 @@ sources:
             tests:
               - not_null
               - accepted_values:
-                  arguments:
-                    values: ["Yes", "No"]
-                    quote: true
+                  values: ["Yes", "No"]
+                  quote: true
               #- dbt_utils.expression_is_true:
               #  arguments:
               #    expression: "date_parse(ValidFrom, '%Y-%m-%d %H:%i:%s') is not null"
