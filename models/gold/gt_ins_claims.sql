@@ -2,7 +2,7 @@
   config(
     materialized='incremental',
     unique_key='claim_id',
-    schema='silver',
+    schema='gold',
     post_hook="{{update_statistics(this,'ClaimsStatistics','claim_id')}}"
   )
 }}
