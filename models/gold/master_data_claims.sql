@@ -43,9 +43,6 @@ WITH base_query AS (
   WHERE
     p.[dbt_valid_to] IS NULL
     AND cu.[dbt_valid_to] IS NULL
-
-    -- Crucial: Call your custom macro at the end of the WHERE statement
-    {{ tsql_empty_filter() }}
 )
 SELECT *
 FROM

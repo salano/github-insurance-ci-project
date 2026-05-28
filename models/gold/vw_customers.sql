@@ -20,8 +20,11 @@ WITH base_query AS (
   WHERE
     cu.[dbt_valid_to] IS NULL
 
-    -- Crucial: Call your custom macro at the end of the WHERE statement
-    {{ tsql_empty_filter() }}
+      -- Safe manual intervention for the --empty flag:
+    {% if flags.EMPTY %}
+      AND 1 = 0
+    {% endif %}
+
 )
 SELECT *
 FROM

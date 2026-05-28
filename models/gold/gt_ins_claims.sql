@@ -32,6 +32,8 @@ FROM
 {% if is_incremental() and not flags.EMPTY %}
   WHERE claim_date > (SELECT COALESCE(MAX(claim_date), '1900-01-01 00:00:00') FROM {{ this }})
 
-  -- Crucial: Call your custom macro at the end of the WHERE statement
-    {{ tsql_empty_filter() }}
+  -- Safe manual intervention for the --empty flag:
+    {% if flags.EMPTY %}
+      AND 1 = 0
+    {% endif %}
 {% endif %}
