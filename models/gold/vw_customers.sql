@@ -19,6 +19,9 @@ WITH base_query AS (
     {{ ref('st_ins_customers') }} cu
   WHERE
     cu.[dbt_valid_to] IS NULL
+
+    -- Crucial: Call your custom macro at the end of the WHERE statement
+    {{ tsql_empty_filter() }}
 )
 SELECT *
 FROM
