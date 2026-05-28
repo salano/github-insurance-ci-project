@@ -29,6 +29,6 @@ WITH silver_table AS (
 FROM
   silver_table
 
-{% if is_incremental() %}
+{% if is_incremental() and not flags.EMPTY %}
   WHERE claim_date > (SELECT COALESCE(MAX(claim_date), '1900-01-01 00:00:00') FROM {{ this }})
 {% endif %}

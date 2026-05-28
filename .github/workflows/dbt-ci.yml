@@ -44,6 +44,8 @@ jobs:
     needs: dbt_test # This job runs only if dbt_test passes.
     steps:
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0 # Fetches full history so dbt can compare states
       - uses: actions/setup-python@v4
         with:
           python-version: "3.13"
@@ -58,8 +60,8 @@ jobs:
         run: dbt deps
 
       - name: run DBT build slim mode
-        run: dbt build --fail-fast --defer --state prod-manifest/ --select state:modified+ --profiles-dir ./
-        #run: dbt build --fail-fast --defer --state prod-manifest/ --select state:modified+ --empty --profiles-dir ./
+        run: dbt build --fail-fast --defer --state prod-manifest/ --select state:modified+ --empty --allow-empty-selection --profiles-dir ./
+        #run: dbt build --fail-fast --defer --state prod-manifest/ --select state:modified+ --empty --allow-empty-selection --profiles-dir ./
 
         env:
           DBT_PROFILES_DIR: .
