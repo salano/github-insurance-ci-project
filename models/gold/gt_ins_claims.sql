@@ -3,6 +3,7 @@
     materialized='incremental',
     unique_key='claim_id',
     schema='gold',
+    on_schema_change='append_new_columns',
     post_hook="{{update_statistics(this,'ClaimsStatistics','claim_id')}}"
   )
 }}
