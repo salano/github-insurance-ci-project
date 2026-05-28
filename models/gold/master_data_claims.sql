@@ -33,12 +33,12 @@ WITH base_query AS (
     cu.[Contact_Number],
     cu.[CustomerName]
   FROM
-    {{ ref('st_ins_customers') }} AS cu
+    {{ ref('st_ins_customers') }} cu
   LEFT JOIN
-    {{ ref('st_ins_policies') }} AS p
+    {{ ref('st_ins_policies') }} p
     ON cu.[cust_id] = p.[cust_id]
   LEFT JOIN
-    {{ ref('gt_ins_claims') }} AS c
+    {{ ref('gt_ins_claims') }} c
     ON p.[policy_id] = c.[policy_id]
   WHERE
     p.[dbt_valid_to] IS NULL
