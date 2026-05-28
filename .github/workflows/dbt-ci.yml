@@ -60,8 +60,8 @@ jobs:
         run: dbt deps
 
       - name: run DBT build slim mode
-        run: dbt build --fail-fast --defer --state prod-manifest/ --select state:modified+ --empty --allow-empty-selection --profiles-dir ./
-        #run: dbt build --fail-fast --defer --state prod-manifest/ --select state:modified+ --empty --allow-empty-selection --profiles-dir ./
+        run: dbt build --fail-fast --defer --state prod-manifest/ --select state:modified+ --empty --profiles-dir ./
+        #run: dbt build --fail-fast --defer --state prod-manifest/ --select state:modified+ --empty --profiles-dir ./
 
         env:
           DBT_PROFILES_DIR: .
