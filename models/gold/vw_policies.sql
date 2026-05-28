@@ -21,7 +21,7 @@ WITH base_query AS (
     p.[monthly_payment],
     p.[distribution_channel]
   FROM
-    {{ ref('st_ins_policies') }} AS p
+    {{ ref('st_ins_policies') }} p -- noqa: AL01
   WHERE
     p.[dbt_valid_to] IS NULL
 

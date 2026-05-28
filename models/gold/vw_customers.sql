@@ -16,7 +16,7 @@ WITH base_query AS (
     cu.[Contact_Number],
     cu.[CustomerName]
   FROM
-    {{ ref('st_ins_customers') }} AS cu
+    {{ ref('st_ins_customers') }} cu -- noqa: AL01
   WHERE
     cu.[dbt_valid_to] IS NULL
 )
