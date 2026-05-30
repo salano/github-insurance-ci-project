@@ -33,7 +33,7 @@ We will perform the followin in the pipeline
 
 1. SQL linting (we use [sqlfluff](https://www.sqlfluff.com/))
 2. dbt testing
-3. dbt build/run
+3. dbt build/run (Slim CI)
 
 > Sqlfluff installation
 
@@ -59,3 +59,4 @@ On push to main branch. We can see the logs
 
 ![AL](cicd_success.png)
 ![ALT](cicd_test.png)
+![ALT](cicd_slim_success.png)
