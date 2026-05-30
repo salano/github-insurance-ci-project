@@ -25,7 +25,7 @@ indented_on_contents = false
 indented_ctes = false
 
 [sqlfluff:rules:aliasing.table]
-aliasing = implicit
+aliasing = explicit
 
 [sqlfluff:rules:aliasing.column]
 aliasing = explicit
