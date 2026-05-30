@@ -20,7 +20,7 @@ WITH base_query AS (
   WHERE
     cu.[dbt_valid_to] IS NULL
 
-      -- Safe manual intervention for the --empty flag:
+    -- Safe manual intervention for the --empty flag:
     {% if flags.EMPTY %}
       AND 1 = 0
     {% endif %}
